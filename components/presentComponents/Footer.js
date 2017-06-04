@@ -1,6 +1,7 @@
 import React from 'react';
 import CONST from '../../constants'
 import {FilterLink} from '../containers/FilterLink'
+import {fakeDB} from '../../api/fakeDB'
 
 export const Footer = () => {
     return (
@@ -26,6 +27,14 @@ export const Footer = () => {
             >
                 Show finished
             </FilterLink>
+            <button onClick={changeBE}>Change BK</button>
         </div>
     )
+};
+
+const changeBE = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(e);
+    fakeDB.todos[0].text = 'chaaaanged!';
 };
