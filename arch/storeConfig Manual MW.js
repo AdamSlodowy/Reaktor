@@ -1,5 +1,5 @@
 import {createStore, combineReducers} from "redux"
-import todos, * as fromTodos from "../reducers/todos";
+import todos, * as fromTodos from "../reducers/index";
 
 
 const wrapDispatchWithMiddleware = (store, middlewares) => {

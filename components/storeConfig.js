@@ -1,7 +1,7 @@
 import {createStore, combineReducers, applyMiddleware} from "redux"
 import promiseMiddleware  from 'redux-promise';
 import logger from 'redux-logger';
-import todos, * as fromTodos from "../reducers/todos";
+import todos, * as fromTodos from "../reducers/index";
 
 
 export const storeConfig = () => {
