@@ -10,13 +10,21 @@ const idsByFilter = combineReducers({
     [CONST.FILTERS.SHOW_UNFINISHED]: idsByFilterReducerCreator(CONST.FILTERS.SHOW_UNFINISHED)
 });
 
-const todos = combineReducers({allTodos, idsByFilter});
-export default todos;
+// const todos = combineReducers({allTodos, idsByFilter});
+// export default todos;
+
+const mainReducer = (state = {}, action) => ({
+    allTodos: allTodos(state.allTodos, action),
+    idsByFilter: idsByFilter(state.idsByFilter, action)
+});
+export default mainReducer;
 
 
 // selector function - prepares the data to be displayed by UI
 export const getTodosByFilter = (state, filter) => {
-    let result = fromIdsByFilter.getIds(state.idsByFilter[filter]).map(id => (fromAllTodos.todoById(state.allTodos,id)));
-    console.log("Result of getTodosbyFilter", result);
-    return result;
+    const ids = fromIdsByFilter.getIds(state.idsByFilter[filter]);
+    return ids.map(id => (fromAllTodos.todoById(state.allTodos, id)));
 };
+
+export const getFetchingStatus = (state,filter) =>
+    fromIdsByFilter.getFetching(state.idsByFilter[filter]);

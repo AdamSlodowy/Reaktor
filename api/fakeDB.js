@@ -18,6 +18,9 @@ export const fakeDB = {
     ]
 };
 
+const cloneTodos = (todos) =>
+     todos.map(todo => ({id: todo.id, completed: todo.completed, text: todo.text}));
+
 const delay = (ms) =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -27,11 +30,11 @@ export const fetchTodos = (filter) => {
 
         switch (filter) {
             case CONST.FILTERS.SHOW_ALL:
-                return fakeDB.todos;
+                return cloneTodos(fakeDB.todos);
             case CONST.FILTERS.SHOW_FINISHED:
-                return fakeDB.todos.filter((todo) => todo.completed);
+                return cloneTodos(fakeDB.todos.filter((todo) => todo.completed));
             case CONST.FILTERS.SHOW_UNFINISHED:
-                return fakeDB.todos.filter((todo) => !todo.completed);
+                return cloneTodos(fakeDB.todos.filter((todo) => !todo.completed));
             default:
                 throw new Error("Unknown filter used: ", {filter})
         }

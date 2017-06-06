@@ -1,12 +1,12 @@
 import {createStore, combineReducers, applyMiddleware} from "redux"
 import promiseMiddleware  from 'redux-promise';
 import logger from 'redux-logger';
-import todos, * as fromTodos from "../reducers/index";
+import mainReducer, * as fromTodos from "../reducers/index";
 
 
 export const storeConfig = () => {
 
-    const mainReducer = combineReducers({todos});
+    // const mainReducer = mainReducer;
 
 
     const middlewares = [promiseMiddleware];
@@ -26,9 +26,6 @@ export const storeConfig = () => {
 
 };
 
-export const getTodosByFilter = (state, filter) => {
-    return fromTodos.getTodosByFilter(state.todos, filter);
-};
 
 
 

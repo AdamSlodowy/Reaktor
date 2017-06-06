@@ -26,6 +26,11 @@ export const toogleTodo = (id) => {
     }
 };
 
+export const requestTodos = (filter) => ({
+    type: CONST.REQUESTDATA,
+    filter
+});
+
 
 export const fetchTodos = (filter) =>
      api.fetchTodos(filter).then(data => (receiveTodos(data,filter))

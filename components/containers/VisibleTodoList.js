@@ -4,7 +4,7 @@ import {TodoList} from '../presentComponents/TodoList'
 import * as actions from "../../actions/actions";
 import {withRouter} from 'react-router';
 import CONST from '../../constants'
-import {getTodosByFilter} from "../storeConfig";
+import {getTodosByFilter, getFetchingStatus} from "../../reducers/index";
 
 
 class VisibleTodoList extends React.Component {
@@ -24,18 +24,24 @@ class VisibleTodoList extends React.Component {
     }
 
     fetchData() {
-        const {filter,fetchTodos} = this.props;
+        const {filter,fetchTodos,requestTodos} = this.props;
+        requestTodos(filter);
         fetchTodos(filter);
     }
 
     render() {
-        const {toogleTodo, ...rest} = this.props;
-        return (
-            <TodoList
-                onClick={toogleTodo}
-                {...rest}
-            />
+        const {toogleTodo,isFetching,todos} = this.props;
+        return(
+            (isFetching && !todos.length) ?
+                <p> Loading... :) </p> :
+
+                <TodoList
+                    onClick={toogleTodo}
+                    todos = {todos}
+                />
         )
+
+
     }
 
 }
@@ -45,6 +51,7 @@ const mapStateToProps = (state, {params}) => {
     const filter = params.filter || CONST.FILTERS.SHOW_ALL;
     return {
         todos: getTodosByFilter(state, filter),
+        isFetching: getFetchingStatus(state,filter),
         filter
     }
 };
