@@ -1,15 +1,20 @@
 import {createStore, combineReducers, applyMiddleware} from "redux"
 import promiseMiddleware  from 'redux-promise';
 import logger from 'redux-logger';
-import todos, * as fromTodos from "../reducers/index";
-
+import mainReducer from "../reducers/index";
 
 export const storeConfig = () => {
 
-    const mainReducer = combineReducers({todos});
+    const thunk = (store) => (next) => (action) => {
+        if (typeof action === 'function') {
+            action(next);
+        } else {
+            next(action);
+        }
+    };
 
 
-    const middlewares = [promiseMiddleware];
+    const middlewares = [thunk];
 
     if (process.env.NODE_ENV === 'production') {
         middlewares.push(logger);
@@ -26,9 +31,6 @@ export const storeConfig = () => {
 
 };
 
-export const getTodosByFilter = (state, filter) => {
-    return fromTodos.getTodosByFilter(state.todos, filter);
-};
 
 
 

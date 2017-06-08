@@ -4,7 +4,8 @@ import {TodoList} from '../presentComponents/TodoList'
 import * as actions from "../../actions/actions";
 import {withRouter} from 'react-router';
 import CONST from '../../constants'
-import {getTodosByFilter} from "../storeConfig";
+import {getTodosByFilter} from "../../reducers/index";
+import {isFetching} from "../../reducers/index";
 
 
 class VisibleTodoList extends React.Component {
@@ -29,12 +30,18 @@ class VisibleTodoList extends React.Component {
     }
 
     render() {
-        const {toogleTodo, ...rest} = this.props;
+        const {toogleTodo, isFetching, todos, ...rest} = this.props;
+
+
         return (
+            <div>
+                {(isFetching && !todos.length) ?
+                <p> Loading... </p> :
             <TodoList
                 onClick={toogleTodo}
-                {...rest}
-            />
+                todos = {todos}
+            />}
+            </div>
         )
     }
 
@@ -45,15 +52,16 @@ const mapStateToProps = (state, {params}) => {
     const filter = params.filter || CONST.FILTERS.SHOW_ALL;
     return {
         todos: getTodosByFilter(state, filter),
+        isFetching: isFetching(state, filter),
         filter
     }
 };
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         onClick: (id) => {
-//             return dispatch(toogleTodo(id))
-//         }
-//     }
+// const mapDispatchToProps = (dispatch) => {           >
+//     return {                                         >
+//         toogleTodo: (id) => {                        >  toggleTodo: toggleTodo ---> toggleTodo (ES6)
+//             return dispatch(toogleTodo(id))          >
+//         }                                            >
+//     }                                                >
 // };
 ///// The above can be replaced by: {onClick: toogleTodo } // config object sent instead of the mapDispatch... https://goo.gl/uNMzVh
 

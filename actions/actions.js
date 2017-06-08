@@ -18,7 +18,7 @@ export const toogleTodo = (id) => {
     }
 };
 
- const receiveTodos = (todosData,filter) => {
+const receiveTodos = (todosData, filter) => {
     return {
         type: CONST.RECEIVEDATA,
         filter,
@@ -27,9 +27,17 @@ export const toogleTodo = (id) => {
 };
 
 
-export const fetchTodos = (filter) =>
-     api.fetchTodos(filter).then(data => (receiveTodos(data,filter))
-    );
+export const fetchTodos = (filter) => (dispatch) => {
+    dispatch(requestTodos(filter));
+    return api.fetchTodos(filter).then(data => (dispatch(receiveTodos(data, filter)))); // return here brings a Promise back so it seems wrong?
+};
+
+
+const requestTodos = (filter) => ({
+    type: CONST.REQUESTDATA,
+    filter
+});
+
 
 
 
