@@ -26,6 +26,11 @@ const receiveTodos = (todosData, filter) => {
     }
 };
 
+export const requestTodos = (filter) => ({
+    type: CONST.REQUESTDATA,
+    filter
+});
+
 
 export const fetchTodos = (filter) => (dispatch) => {
     dispatch(requestTodos(filter));
