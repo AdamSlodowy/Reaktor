@@ -23,9 +23,9 @@ export default  mainReducer;
 
 // selector function - prepares the data to be displayed by UI
 export const getTodosByFilter = (state, filter) => {
-    console.log(state);
-    let result = fromIdsByFilter.getIds(state.idsByFilter[filter]).map(id => (fromAllTodos.todoById(state.allTodos,id)));
-    return result;
+    let ids = fromIdsByFilter.getIds(state.idsByFilter[filter]);
+    return  ids.map(id => (fromAllTodos.todoById(state.allTodos,id)));
+
 };
 
 // selector for isFetching

@@ -27,7 +27,7 @@ const delay = (ms) =>
 
 
 export const fetchTodos = (filter) => {
-    return delay(2000).then(() => {
+    return delay(3000).then(() => {
 
         switch (filter) {
             case CONST.FILTERS.SHOW_ALL:

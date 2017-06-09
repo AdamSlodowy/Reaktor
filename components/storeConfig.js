@@ -7,7 +7,7 @@ export const storeConfig = () => {
 
     const thunk = (store) => (next) => (action) => {
         if (typeof action === 'function') {
-            action(next);
+            action(next, store.getState);
         } else {
             next(action);
         }

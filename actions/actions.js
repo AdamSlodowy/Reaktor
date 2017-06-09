@@ -1,6 +1,7 @@
 import CONST from "../constants";
 import uuid from 'node-uuid';
 import * as api from "../api/fakeDB";
+import {isFetching} from "../reducers/index";
 
 
 export const addTodo = (text) => {
@@ -32,9 +33,13 @@ const requestTodos = (filter) => ({
 });
 
 
-export const fetchTodos = (filter) => (dispatch) => {
+export const fetchTodos = (filter) => (dispatch, getState) => {
+    if (isFetching(getState(), filter)) {
+        console.log("Excessive api call prevented!");
+            return;
+    }
     dispatch(requestTodos(filter));
-    return api.fetchTodos(filter).then(data => (dispatch(receiveTodos(data, filter)))); // return here brings a Promise back so it seems wrong?
+    return api.fetchTodos(filter).then(data => (dispatch(receiveTodos(data, filter))));
 };
 
 
