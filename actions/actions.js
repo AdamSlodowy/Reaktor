@@ -32,6 +32,13 @@ const requestTodos = (filter) => ({
     filter
 });
 
+const apiError = (error) => {
+  return {
+      type: CONST.CATCHERROR,
+      msg: error.message
+  }
+};
+
 
 export const fetchTodos = (filter) => (dispatch, getState) => {
     if (isFetching(getState(), filter)) {
@@ -39,7 +46,11 @@ export const fetchTodos = (filter) => (dispatch, getState) => {
             return;
     }
     dispatch(requestTodos(filter));
-    return api.fetchTodos(filter).then(data => (dispatch(receiveTodos(data, filter))));
+    return api.fetchTodos(filter).then(
+        data => (dispatch(receiveTodos(data, filter))),
+        error => (dispatch(apiError(error)))
+
+    );
 };
 
 

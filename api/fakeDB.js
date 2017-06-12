@@ -27,8 +27,10 @@ const delay = (ms) =>
 
 
 export const fetchTodos = (filter) => {
-    return delay(3000).then(() => {
-
+    return delay(1000).then(() => {
+        if(Math.random()> 0.5) {
+            throw Error("Backend rzuca błąd!");
+        }
         switch (filter) {
             case CONST.FILTERS.SHOW_ALL:
                 return cloneTodos(fakeDB.todos);

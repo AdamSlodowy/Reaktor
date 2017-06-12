@@ -30,5 +30,9 @@ export const getTodosByFilter = (state, filter) => {
 
 // selector for isFetching
 export const isFetching = (state, filter) => {
-    return fromIdsByFilter.getFetchingStatus(state.idsByFilter[filter])
+    return fromIdsByFilter.getFetchingStatus(state.idsByFilter[filter]);
+};
+
+export const getApiError = (state, filter) => {
+    return fromIdsByFilter.getApiError(state.idsByFilter[filter]);
 };

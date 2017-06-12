@@ -4,7 +4,7 @@ import {TodoList} from '../presentComponents/TodoList'
 import * as actions from "../../actions/actions";
 import {withRouter} from 'react-router';
 import CONST from '../../constants'
-import {getTodosByFilter} from "../../reducers/index";
+import {getTodosByFilter, getApiError} from "../../reducers/index";
 import {isFetching} from "../../reducers/index";
 
 
@@ -30,12 +30,14 @@ class VisibleTodoList extends React.Component {
     }
 
     render() {
-        const {toogleTodo, isFetching, todos, ...rest} = this.props;
+        const {toogleTodo, isFetching, todos, apiError,  ...rest} = this.props;
 
 
         return (
             <div>
-                {(isFetching && !todos.length) ?
+                {(apiError && !todos.length) ?
+                <p>{apiError}</p> :
+                (isFetching && !todos.length) ?
                 <p> Loading... </p> :
             <TodoList
                 onClick={toogleTodo}
@@ -53,7 +55,8 @@ const mapStateToProps = (state, {params}) => {
     return {
         todos: getTodosByFilter(state, filter),
         isFetching: isFetching(state, filter),
-        filter
+        filter,
+        apiError: getApiError(state,filter)
     }
 };
 // const mapDispatchToProps = (dispatch) => {           >
