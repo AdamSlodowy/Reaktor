@@ -6,6 +6,7 @@ import {withRouter} from 'react-router';
 import CONST from '../../constants'
 import {getTodosByFilter, getApiError} from "../../reducers/index";
 import {isFetching} from "../../reducers/index";
+import Error from "../presentComponents/Error";
 
 
 class VisibleTodoList extends React.Component {
@@ -24,25 +25,26 @@ class VisibleTodoList extends React.Component {
         }
     }
 
-    fetchData() {
-        const {filter,fetchTodos} = this.props;
+    fetchData = () => {
+        const {filter, fetchTodos} = this.props;
         fetchTodos(filter);
-    }
+    };
 
     render() {
-        const {toogleTodo, isFetching, todos, apiError,  ...rest} = this.props;
+        const {toogleTodo, isFetching, todos, apiError, ...rest} = this.props;
 
 
         return (
             <div>
                 {(apiError && !todos.length) ?
-                <p>{apiError}</p> :
-                (isFetching && !todos.length) ?
-                <p> Loading... </p> :
-            <TodoList
-                onClick={toogleTodo}
-                todos = {todos}
-            />}
+                    <Error onRetry={this.fetchData} errorMsg={apiError}/> :
+                    (isFetching && !todos.length) ?
+                        <p> Loading... </p> :
+                        <TodoList
+                            onClick={toogleTodo}
+                            todos={todos}
+                        />
+                }
             </div>
         )
     }
@@ -56,7 +58,7 @@ const mapStateToProps = (state, {params}) => {
         todos: getTodosByFilter(state, filter),
         isFetching: isFetching(state, filter),
         filter,
-        apiError: getApiError(state,filter)
+        apiError: getApiError(state, filter)
     }
 };
 // const mapDispatchToProps = (dispatch) => {           >

@@ -32,10 +32,11 @@ const requestTodos = (filter) => ({
     filter
 });
 
-const apiError = (error) => {
+const apiError = (error, filter) => {
   return {
       type: CONST.CATCHERROR,
-      msg: error.message
+      msg: error.message || 'The API call did not work (error falback msg',
+      filter
   }
 };
 
@@ -48,7 +49,7 @@ export const fetchTodos = (filter) => (dispatch, getState) => {
     dispatch(requestTodos(filter));
     return api.fetchTodos(filter).then(
         data => (dispatch(receiveTodos(data, filter))),
-        error => (dispatch(apiError(error)))
+        error => (dispatch(apiError(error, filter)))
 
     );
 };

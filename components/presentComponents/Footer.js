@@ -27,14 +27,6 @@ export const Footer = () => {
             >
                 Show finished
             </FilterLink>
-            <button onClick={changeBE}>Change BK</button>
         </div>
     )
-};
-
-const changeBE = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log(e);
-    fakeDB.todos[0].text = 'chaaaanged!';
 };

@@ -25,6 +25,7 @@ const idsByFilterReducerCreator = (filter) => {
                     true
                 );
             case CONST.RECEIVEDATA:
+            case CONST.CATCHERROR:
                 return (
                     false
                 );
@@ -34,13 +35,16 @@ const idsByFilterReducerCreator = (filter) => {
     };
 
     const apiError = (state = null, action) => {
+        if (action.filter !== filter) {
+            return state;
+        }
         switch (action.type) {
             case CONST.CATCHERROR:
                 return (
                     action.msg
                 );
             case CONST.RECEIVEDATA:
-            case CONST.RETRY:
+            case CONST.REQUESTDATA:
                 return (
                     null
                 );
