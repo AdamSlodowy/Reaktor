@@ -11,10 +11,27 @@ const allTodos = (state = {}, action) => {
                 ...state,
                 ...dataToMergeWithState
             };
+        case CONST.ADD_TODO:
+            return {
+                ...state,
+                [action.todo.id]: action.todo
+            };
+        case CONST.TOGGLE_TODO:
+            let toDoToToggle = state[action.todo.id];
+            let updatedToDo = {
+                id: toDoToToggle.id,
+                text: toDoToToggle.text,
+                completed: toDoToToggle.completed
+            };
+            updatedToDo.completed = !toDoToToggle.completed;
+            return {
+                ...state,
+                [action.todo.id]: updatedToDo
+            };
         default:
             return state;
     }
 };
 
 export default allTodos;
-export const todoById = (state,id) => state[id];
+export const todoById = (state, id) => state[id];

@@ -1,22 +1,23 @@
 import CONST from "../constants";
-import uuid from 'node-uuid';
 import * as api from "../api/fakeDB";
 import {isFetching} from "../reducers/index";
 
 
-export const addTodo = (text) => {
-    return {
-        type: CONST.ADD_TODO,
-        text,
-        id: uuid.v4()
-    }
+export const addTodo = (text) => (dispatch) => {
+    api.addTodo(text).then((todo)=> {
+        dispatch({
+            type: CONST.ADD_TODO,
+            todo
+        })
+    })
 };
 
-export const toogleTodo = (id) => {
-    return {
+export const toggleTodo = (id) => (dispatch) => {
+    api.toggleTodo(id).then((todo)=>{dispatch({
         type: CONST.TOGGLE_TODO,
-        id
-    }
+        todo
+    })})
+
 };
 
 const receiveTodos = (todosData, filter) => {

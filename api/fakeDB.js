@@ -19,7 +19,7 @@ export const fakeDB = {
 };
 
 const cloneTodos = (todos) =>
-    todos.map(todo => ({id: todo.id, completed: todo.completed, text: todo.text}));
+    todos.map(todo => ({id: todo.id, completed: todo.completed, text: todo.text})); // this cloning to be 100% accurate would have to cover the uuid object too
 
 
 const delay = (ms) =>
@@ -28,7 +28,7 @@ const delay = (ms) =>
 
 export const fetchTodos = (filter) => {
     return delay(1000).then(() => {
-        if(Math.random()> 0.5) {
+        if(Math.random()> 0.8) {
             throw Error("Backend rzuca błąd!");
         }
         switch (filter) {
@@ -42,5 +42,29 @@ export const fetchTodos = (filter) => {
                 throw new Error("Unknown filter used: ", {filter})
         }
 
+    })
+};
+
+export const addTodo = (text) => {
+    return delay(500).then(()=>{
+        const newTodo = {
+            id: uuid.v4(),
+            completed: false,
+            text
+        };
+        fakeDB.todos.push(newTodo);
+        return newTodo;
+    })
+};
+
+export const toggleTodo = (id) => {
+    return delay(500).then(() => {
+        let toggledTodo = {};
+        fakeDB.todos.forEach((curTodo)=>{if(curTodo.id === id) {
+            curTodo.completed = !curTodo.completed;
+            toggledTodo = curTodo;
+        }
+        });
+        return toggledTodo;
     })
 };

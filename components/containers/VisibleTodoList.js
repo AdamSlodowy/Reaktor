@@ -31,7 +31,7 @@ class VisibleTodoList extends React.Component {
     };
 
     render() {
-        const {toogleTodo, isFetching, todos, apiError, ...rest} = this.props;
+        const {toggleTodo, isFetching, todos, apiError, ...rest} = this.props;
 
 
         return (
@@ -41,7 +41,7 @@ class VisibleTodoList extends React.Component {
                     (isFetching && !todos.length) ?
                         <p> Loading... </p> :
                         <TodoList
-                            onClick={toogleTodo}
+                            onClick={toggleTodo}
                             todos={todos}
                         />
                 }
@@ -50,6 +50,7 @@ class VisibleTodoList extends React.Component {
     }
 
 }
+
 
 const mapStateToProps = (state, {params}) => {
 
@@ -63,12 +64,12 @@ const mapStateToProps = (state, {params}) => {
 };
 // const mapDispatchToProps = (dispatch) => {           >
 //     return {                                         >
-//         toogleTodo: (id) => {                        >  toggleTodo: toggleTodo ---> toggleTodo (ES6)
-//             return dispatch(toogleTodo(id))          >
+//         toggleTodo: (id) => {                        >  toggleTodo: toggleTodo ---> toggleTodo (ES6)
+//             return dispatch(toggleTodo(id))          >
 //         }                                            >
 //     }                                                >
 // };
-///// The above can be replaced by: {onClick: toogleTodo } // config object sent instead of the mapDispatch... https://goo.gl/uNMzVh
+///// The above can be replaced by: {onClick: toggleTodo } // config object sent instead of the mapDispatch... https://goo.gl/uNMzVh
 
 
 // export const VisibleTodoList = withRouter(connect(mapStateToProps, mapDispatchToProps)(TodoList));

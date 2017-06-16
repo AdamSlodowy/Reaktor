@@ -13,7 +13,6 @@ export const storeConfig = () => {
         }
     };
 
-
     const middlewares = [thunk];
 
     if (process.env.NODE_ENV === 'production') {
