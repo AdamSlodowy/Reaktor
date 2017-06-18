@@ -1,5 +1,6 @@
 import uuid from 'node-uuid';
 import CONST from '../constants';
+import _ from 'lodash';
 
 export const fakeDB = {
     todos: [{
@@ -59,12 +60,14 @@ export const addTodo = (text) => {
 
 export const toggleTodo = (id) => {
     return delay(500).then(() => {
-        let toggledTodo = {};
-        fakeDB.todos.forEach((curTodo)=>{if(curTodo.id === id) {
-            curTodo.completed = !curTodo.completed;
-            toggledTodo = curTodo;
-        }
-        });
+        let toggledTodo = _.find(fakeDB.todos, (todo) => todo.id === id);
+        toggledTodo.completed = !toggledTodo.completed;
+
+        // fakeDB.todos.forEach((curTodo)=>{if(curTodo.id === id) {
+        //     curTodo.completed = !curTodo.completed;
+        //     toggledTodo = curTodo;
+        // }
+        // });
         return toggledTodo;
     })
 };

@@ -23,6 +23,7 @@ export default  mainReducer;
 
 // selector function - prepares the data to be displayed by UI
 export const getTodosByFilter = (state, filter) => {
+    console.log("Get Todos called!");
     let ids = fromIdsByFilter.getIds(state.idsByFilter[filter]);
     return  ids.map(id => (fromAllTodos.todoById(state.allTodos,id)));
 

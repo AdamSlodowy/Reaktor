@@ -20,7 +20,7 @@ const config = {
         port: 3000, // Port Number
         host: 'localhost', // Change to '0.0.0.0' for external facing server
     },
-    devtool: 'eval-source-map',
+    devtool: 'cheap-module-source-map',
     output: {
         path: buildPath, // Path of output file
         filename: 'app_output.js',

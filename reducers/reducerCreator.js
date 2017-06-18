@@ -3,8 +3,9 @@ import {combineReducers} from "redux";
 
 const idsByFilterReducerCreator = (filter) => {
 
-    const handleToggle = (state, todo) => {
-        const {completed, id} = todo;
+    const handleToggle = (state, action) => {
+        const {entities, result: id} = action.todosData;
+        const {completed} = entities.todos[id];
 
         if (completed && filter === CONST.FILTERS.SHOW_UNFINISHED) {
             return state.filter(idFromFitler => idFromFitler !== id);
@@ -23,14 +24,14 @@ const idsByFilterReducerCreator = (filter) => {
         switch (action.type) {
             case CONST.RECEIVEDATA:
                 return (action.filter === filter) ?
-                    action.todosData.map(todo => todo.id) :
+                    Object.keys(action.todosData.entities.todos) : // in this case we could also use action.todosData.result
                     state;
             case CONST.ADD_TODO:
                 return filter !== CONST.FILTERS.SHOW_FINISHED ?
-                    [...state, action.todo.id] :
+                    [...state, action.todosData.result] :
                     state;
             case CONST.TOGGLE_TODO:
-                return handleToggle(state, action.todo);
+                return handleToggle(state, action);
             default:
                 return state;
         }

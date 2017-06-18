@@ -4,10 +4,10 @@ import {TodoList} from '../presentComponents/TodoList'
 import * as actions from "../../actions/actions";
 import {withRouter} from 'react-router';
 import CONST from '../../constants'
-import {getTodosByFilter, getApiError} from "../../reducers/index";
+import {getApiError} from "../../reducers/index";
 import {isFetching} from "../../reducers/index";
 import Error from "../presentComponents/Error";
-
+import getTodosByFilter from "../../selectors/todosByFilter"
 
 class VisibleTodoList extends React.Component {
 
@@ -51,9 +51,10 @@ class VisibleTodoList extends React.Component {
 
 }
 
-
+let x =0;
 const mapStateToProps = (state, {params}) => {
 
+    console.log("MSTP called ", x++, " time");
     const filter = params.filter || CONST.FILTERS.SHOW_ALL;
     return {
         todos: getTodosByFilter(state, filter),
